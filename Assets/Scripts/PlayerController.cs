@@ -5,6 +5,7 @@ using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
+    private static DataManager;
     private float elapsedTime = 0f;
     private int score = 0;
     private float scoreMultiplier = 10f;
@@ -15,6 +16,18 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public GameObject ExplosionEffects;
     public GameObject RestartButton;
+
+    void Awake()
+    {
+        dataManager = FindFirstObjectByType<DataManager>();
+        if(dataManager != null)
+        {
+            
+            var userData =dataManager.LoadData();
+            score = intuserData.highscore;
+            NameText.text = "Best Score: " + playerName + " : " + score;
+        }
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
