@@ -34,7 +34,6 @@ public class DataManager : MonoBehaviour
         {
             string json = File.ReadAllText(path);
             UserData userData = JsonUtility.FromJson<UserData>(json);
-            Debug.Log(json);
             return userData;
         }
         else

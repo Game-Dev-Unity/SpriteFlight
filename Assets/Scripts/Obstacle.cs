@@ -4,8 +4,8 @@ public class Obstacle : MonoBehaviour
 {
     private float minSize = 0.5f;
     private float maxSize = 2f;
-    private float minSpeed = 50f;
-    private float maxSpeed = 150f;
+    private float minSpeed = 100f;
+    private float maxSpeed = 200f;
     private float maxSpinSpeed = 10f;
     public GameObject Effects;
 

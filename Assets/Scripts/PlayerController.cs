@@ -5,7 +5,7 @@ using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
-    private static DataManager;
+    private DataManager dataManager;
     private float elapsedTime = 0f;
     private int score = 0;
     private float scoreMultiplier = 10f;
@@ -13,20 +13,17 @@ public class PlayerController : MonoBehaviour
     private float maxSpeed = 5f;
     private Rigidbody2D rb;
     [SerializeField] private GameObject BoosterFlame;
+    [SerializeField] private GameObject BordersParent;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI HighScoreText;
     public GameObject ExplosionEffects;
     public GameObject RestartButton;
 
     void Awake()
     {
         dataManager = FindFirstObjectByType<DataManager>();
-        if(dataManager != null)
-        {
-            
-            var userData =dataManager.LoadData();
-            score = intuserData.highscore;
-            NameText.text = "Best Score: " + playerName + " : " + score;
-        }
+        HighScoreText.gameObject.SetActive(false);
+        BordersParent.gameObject.SetActive(true);
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -44,8 +41,11 @@ public class PlayerController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other)
     {
         Instantiate(ExplosionEffects, transform.position, Quaternion.identity);
+        SavePreviousData();
+        ShowData();
         Destroy(gameObject);
         RestartButton.SetActive(true);
+        BordersParent.gameObject.SetActive(false);
     }
     void UpdateScore()
     {
@@ -78,5 +78,25 @@ public class PlayerController : MonoBehaviour
         {
             BoosterFlame.SetActive(false);
         }
+    }
+    void ShowData()
+    {
+        if(dataManager != null)
+        {   
+            var userData =dataManager.LoadData();
+            HighScoreText.text = "Best Score : " + userData.highscore;
+            HighScoreText.gameObject.SetActive(true);
+        }
+    }
+    void SavePreviousData()
+    {
+        if(dataManager != null)
+        {
+            var previousData = dataManager.LoadData();
+            if(int.Parse(previousData.highscore) < score)
+            {
+                dataManager.SaveData(score.ToString());
+            }      
+        }   
     }
 }
