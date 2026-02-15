@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
     public TextMeshProUGUI HighScoreText;
     public GameObject ExplosionEffects;
     public GameObject RestartButton;
+    public InputAction moveForward;
+    public InputAction lookPosition;
+
 
     void Awake()
     {
@@ -28,6 +31,8 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        moveForward.Enable();
+        lookPosition.Enable();
         rb = GetComponent<Rigidbody2D>();
         RestartButton.SetActive(false);
     }
@@ -55,10 +60,10 @@ public class PlayerController : MonoBehaviour
     }
     void MovePlayer()
     {
-        if (Mouse.current.leftButton.isPressed)
+        if (moveForward.IsPressed())
         {
             //calculate direction of mouse
-            Vector3 positionMouse = Camera.main.ScreenToWorldPoint(Mouse.current.position.value);
+            Vector3 positionMouse = Camera.main.ScreenToWorldPoint(lookPosition.ReadValue<Vector2>());
             Vector2 direction = transform.position - positionMouse;
             direction = direction.normalized;
 
@@ -70,11 +75,11 @@ public class PlayerController : MonoBehaviour
                 rb.linearVelocity = rb.linearVelocity.normalized * maxSpeed;
             }
         }
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (moveForward.WasPressedThisFrame())
         {
             BoosterFlame.SetActive(true);
         }
-        else if(Mouse.current.leftButton.wasReleasedThisFrame)
+        else if(moveForward.WasReleasedThisFrame())
         {
             BoosterFlame.SetActive(false);
         }
