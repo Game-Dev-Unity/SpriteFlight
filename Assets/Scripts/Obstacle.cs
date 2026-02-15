@@ -33,9 +33,9 @@ public class Obstacle : MonoBehaviour
     }
     void FixedUpdate()
     {
-        if (rb.velocity.magnitude > maxVelocity)
+        if (rb.linearVelocity.magnitude > maxVelocity)
         {
-            rb.velocity = rb.velocity.normalized * maxVelocity;
+            rb.linearVelocity = rb.linearVelocity.normalized * maxVelocity;
         }
     }
     void OnCollisionEnter2D(Collision2D other)
