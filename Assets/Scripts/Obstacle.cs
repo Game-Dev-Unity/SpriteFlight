@@ -7,6 +7,7 @@ public class Obstacle : MonoBehaviour
     private float minSpeed = 100f;
     private float maxSpeed = 200f;
     private float maxSpinSpeed = 10f;
+    private float maxVelocity = 15f;
     public GameObject Effects;
 
     private Rigidbody2D rb;
@@ -29,6 +30,13 @@ public class Obstacle : MonoBehaviour
     void Update()
     {
         
+    }
+    void FixedUpdate()
+    {
+        if (rb.velocity.magnitude > maxVelocity)
+        {
+            rb.velocity = rb.velocity.normalized * maxVelocity;
+        }
     }
     void OnCollisionEnter2D(Collision2D other)
     {

@@ -84,6 +84,7 @@ public class PlayerController : MonoBehaviour
         if(dataManager != null)
         {   
             var userData =dataManager.LoadData();
+            if(userData == null) return;
             HighScoreText.text = "Best Score : " + userData.highscore;
             HighScoreText.gameObject.SetActive(true);
         }
@@ -93,7 +94,7 @@ public class PlayerController : MonoBehaviour
         if(dataManager != null)
         {
             var previousData = dataManager.LoadData();
-            if(int.Parse(previousData.highscore) < score)
+            if(previousData == null || int.Parse(previousData.highscore) < score)
             {
                 dataManager.SaveData(score.ToString());
             }      
